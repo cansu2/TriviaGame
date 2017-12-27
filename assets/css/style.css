@@ -1,0 +1,41 @@
+body{
+	background-image:url("../images/bg.jpg");
+}
+
+#christmas {
+	color:yellow;
+}
+.container{
+	height: 600px;
+	background-color: #ffffff;
+	margin:100px;
+	text-align: center;
+}
+
+.enterPage{
+	padding: 200px;
+}
+
+#start{
+	margin:40px;
+}
+
+#questionBox{
+     height: 300px;
+     width: 600px;
+     position:relative;
+     margin:auto;
+     margin-top:200px;
+
+
+}
+
+#timer{
+	position:absolute;
+	margin-left:500px;
+}
+
+img{
+	height:250px;
+	width: 300px;
+}
