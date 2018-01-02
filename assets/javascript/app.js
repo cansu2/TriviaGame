@@ -96,6 +96,7 @@ $(".answers").on("click",function() {
 		correctAnswers++
 		// console.log(correctAnswers)
 		console.log("corrects"+correctAnswers)
+	 // that part for giphys but there is a little bug if I open I can stop and continue to the game 
 		// $.ajax({
 		//   url: queryURL,
 		//   method: 'GET'
