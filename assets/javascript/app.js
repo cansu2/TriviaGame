@@ -37,81 +37,127 @@ var questionCounter=0;
 var random=0;
 var randomQuestions;
 var answerArray=[];
-var time=0;
+var time=16;
 var intervalId;
 var correctAnswers=0;
-var wrongAnswers=0;
+var wrongAnswers=1;
 var answer= "";
+var interval = null;
 
 var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=christmas"
 var queryUrlNo ="https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=no"
 
 function getQuestion(){
-	time=26;
+	time=16;
 	$("#question").html(questions[questionCounter].question);
 	answerArray = questions[questionCounter].choices;
 		$("#answer1").text(answerArray[0]);
     	$("#answer2").text(answerArray[1]);
     	$("#answer3").text(answerArray[2]);
     	$("#answer4").text(answerArray[3]);
-    answer = questions[questionCounter].correctAnswer	
+    answer = questions[questionCounter].correctAnswer
+    questionCounter++
+
+     if (questionCounter === 9){
+  
+  	results();
+  	notRun();
+  } else {
+
+  	
+  }
+   	
 }
 //timer
 
 function run() { 
-    intervalId = setInterval(decrement,1000);
+    interval = setInterval(decrement,1000);
     }
-    function decrement(){
+ 
+ function notRun(){
+    clearInterval(interval);
+ }    
+
+function decrement(){
     	time--;
-    	$("#timer").text("Time: " + time);
-    	if (time === 0){
+    	if (time > 0){
+    	   $("#timer").text("Time: " + time); 
+    	} else if (time <= 0){
+   ;
     		getQuestion();
     	}
-    }   
+ 
+    }
+
 //control answers
 
 $(".answers").on("click",function() {
-	console.log(this.id)	
-	console.log(answer);
-	questionCounter++
-
 	if (this.id === answer){
 		correctAnswers++
-		console.log(correctAnswers)
-		console.log("nice")
-		$.ajax({
-		  url: queryURL,
-		  method: 'GET'
-		}).done(function(response) {
-			var imageUrl = response.data.image_original_url;
-			var image =  $("<img>");
-			image.attr("src", imageUrl);
-		  $("#gif").html(image);
-		});
-	} else {
-		console.log("keep going");
+		// console.log(correctAnswers)
+		console.log("corrects"+correctAnswers)
+		// $.ajax({
+		//   url: queryURL,
+		//   method: 'GET'
+		// }).done(function(response) {
+		// 	var imageUrl = response.data.image_original_url;
+		// 	var image =  $("<img>");
+		// 	image.attr("src", imageUrl);
+		//   $("#gif").html(image);
+		// });
+		getQuestion();
+	} else if (this.id != answer){
+		console.log("wrong answers" + wrongAnswers);
 		wrongAnswers++
-		$.ajax({
-		  url: queryUrlNo,
-		  method: 'GET'
-		}).done(function(response) {
-			var imageUrl = response.data.image_original_url;
-			var image =  $("<img>");
-			image.attr("src", imageUrl);
-		  $("#gif").html(image);
-		});	
-  }	
-
-  if (questionCounter === 9){
-	$("#questionNumber").text("Results");
-}
-setTimeout(function(){
-		  	getQuestion();
-		  },3000);
+		// $.ajax({
+		//   url: queryUrlNo,
+		//   method: 'GET'
+		// }).done(function(response) {
+		// 	var imageUrl = response.data.image_original_url;
+		// 	var image =  $("<img>");
+		// 	image.attr("src", imageUrl);
+		//   $("#gif").html(image);
+		// });
+	     	
+	getQuestion();	 	
+  }
 
 });
 
 //get results 
+
+function results(){
+		$("#question").html("");
+  		$("#questionNumber").html("");
+  		$("#timer").text(" ");
+  		$("#answer1").text("Total Questions is 10.");
+    	$("#answer2").text("Wrong Answers: "  + wrongAnswers);
+    	$("#answer3").text("Correct Answers: " + correctAnswers);
+    	$("#answer4").text("Play Again");
+    $("#answer4").on("click",function() { 
+    	resetGame();
+    });
+
+	}
+
+//for new game
+
+function resetGame() {
+		questionCounter=0;
+		random=0;
+		randomQuestions;
+		answerArray=[];
+		time=16;
+		intervalId;
+		correctAnswers=0;
+		wrongAnswers=1;
+		answer= "";
+		interval = null;
+
+		getQuestion();
+		run();
+		decrement();
+	}
 
 
 

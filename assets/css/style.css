@@ -39,3 +39,19 @@ img{
 	height:250px;
 	width: 300px;
 }
+
+
+#questionNumber{
+	text-align: center;
+}
+
+#question{
+	text-align: center;
+}
+.answers{
+	font-size:17px;
+	margin-left:250px;
+}
+
+
+
